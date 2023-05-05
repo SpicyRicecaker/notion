@@ -5,6 +5,7 @@ use crate::ids::{AsIdentifier, BlockId, DatabaseId, PageId};
 use crate::models::text::{RichText, TextColor};
 use crate::models::users::UserCommon;
 
+#[cfg(test)]
 mod tests;
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
@@ -462,9 +463,9 @@ impl AsIdentifier<BlockId> for Block {
     }
 }
 
-impl Into<CreateBlock> for Block {
-    fn into(self) -> CreateBlock {
-        match self {
+impl From<Block> for CreateBlock {
+    fn from(val: Block) -> Self {
+        match val {
             Block::Paragraph { paragraph, .. } => CreateBlock::Paragraph { paragraph },
             Block::Heading1 { heading_1, .. } => CreateBlock::Heading1 { heading_1 },
             Block::Heading2 { heading_2, .. } => CreateBlock::Heading2 { heading_2 },
